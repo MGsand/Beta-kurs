@@ -1,111 +1,46 @@
+#include <iostream>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// struct tov {char name200]; float c; int kol;} t1;
+void noformat(int ds);
 void selectfail();
-void Clean(char* name);
+void Clean();
 void strlong();
-// void addtostart(char *name);
-// void  addtoend(char *name);
-// void delete_t(char *name);
 FILE* f;
-int dstr = 10;
+int dstr = 20;
 int nstr = 0;
 char freename[6];
-// f
+// string *as;
+//
 // char fname[]="a.txt";
 char stroka[] = "one two";
 //
-char fname[10];
+int r;
+int n = 10, ij = 0;
+char fname[255];
+//
+char cs[15];
+// char tcs[r];
 char* T;
-//	T=(int * ) malloc(m*sizeof(int));
-// string fname();
+int spper = 1;
 int flag = 0;
-int n, ij = 0;
+
 int main()
 {
     char c;
     selectfail();
 
-    /* do {
-        for ( n=0; n<dstr; n++){
-            ch=fgetc(f);
-    //       stroka
-           // puts(n);
-            printf("%d", n);
-       }
-    //   fprintf(f,"\n");
-         fputs("\n",f);
-      nstr++;
-      printf("%d\n",nstr);
-     }
-    while (ch!=EOF);
-    */
-
     //
-    /*do {
-        for ( n=0; n<dstr; n++){
-            ch=fgetc(f);
-            }
-    //   nstr++;
+    r = 15;
 
-     }
-    while (ch!=EOF); */
-    puts("1");
-    T = (char*)malloc(n * sizeof(char));
-    puts("2");
-
-    //
-    /* for ( int i=0; i<n; i++){
-            T[i]=fgetc(f);
-            if( (i % dstr)==0){
-                 nstr++;
-                 }
-
-           // puts(n);
-     //
-     //      printf("%s", T[i]);
-       } */
     puts("3");
-    n = n + n * nstr;
-    printf("%d\n", n);
-    printf("%d\n", nstr);
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < nstr; j++) {
-            fprintf(f, "%s", &T[ij]);
-            ij++;
-        }
-        fputs("\n", f);
-    }
-    // */
-    // puts("4");
-    fclose(f);
-    /*
-   f=fopen(fname,"rb+");
-   //rewind(f);
-   do {
-       for ( n=0; n<dstr; n++){
-           ch=fgetc(f);
-          stroka
-          // puts(n);
-           printf("%d", n);
-      }
-   //   fprintf(f,"\n");
-        fputs("\n",f);
-     nstr++;
-     printf("%d\n",nstr);
-    }
-   while (ch!=EOF);
-    fclose(f);
-   //
-    */
-    // getch();
     while (1) { // system("CLS");
         puts("  1 - Select file");
         puts("  2 - Clean all file");
         puts("  3 - Change string length ");
+        puts("  4 - No format");
         puts("  0 - Exit");
 
         c = getchar();
@@ -116,14 +51,14 @@ int main()
             selectfail();
             break;
         case '2':
-            Clean(fname);
+            Clean();
             break;
         case '3':
             strlong();
             break;
-            //      case '4':addtostart(fname);break;
-            //      case '5':addtoend(fname);break;
-            //      case '6':delete_t(fname);break;
+        case '4':
+            noformat(dstr);
+            break;
         case '0':
             return 0;
         default:
@@ -134,14 +69,103 @@ int main()
     getchar();
 }
 
-//}
-void Clean(char* name)
+void noformat(int ds)
 {
-    FILE* tf;
+    // char str[ds];
+    f = fopen(fname, "r");
+    char cha;
+    char pred;
+    //    std::string txt;
+    //    std::string st;
+    //     char  *st[ds];
+    int k = 0, ks = 1;
+    /*          do {                              // string
+            //cha=fgetc(f);
+            cha=fgetc(f);
+            k++;
+            txt+=cha;
+     }
+    while (cha!=EOF);
+    //char chi;
+    fputs("\n",f);
+              for (int i=0;i<k;i++){
+    //              cha=txt(i);
+    //             char chi = const_cast<char*>(txt.(i));
+    //              fputs(cha,f);
+    //                char * cha = txt.data(i);
+                  printf("%s",ds);
+            }  */
+
+    //
+    printf("%d", ds);
+    // /*
+
+    do {
+        cha = fgetc(f);
+        k++;
+        if ((k % ds) == 0)
+            ks++;
+    } while (cha != EOF); // */
+    printf("ks=%d\n", ks);
+    printf("k=%d\n", k);
+
+    rewind(f);
+    puts("a");
+    char mt[ks][ds];
+    for (int i = 0; i < ks; i++) {
+        for (int j = 0; j < ds; j++) {
+            mt[i][j] = fgetc(f);
+            cha = mt[i][j];
+            //         chi=mt[i][j];
+            while (cha == '\n') {
+                mt[i][j] = fgetc(f);
+                cha = mt[i][j];
+                //                       j++;
+                puts("/ m n");
+            }
+            while (pred == cha && cha == ' ') {
+                mt[i][j] = fgetc(f);
+                cha = mt[i][j];
+                puts("probel");
+            }
+            pred = cha;
+            //         if (cha==EOF) continue;
+            //         if (chi==(-1)) continue;
+        }
+        // fputs("\n",f);
+    } //
+    fclose(f);
+    printf("\n");
+    printf("\n");
+
+    f = fopen(fname, "w");
+    fclose(f);
+
+    f = fopen(fname, "r+");
+    for (int i = 0; i < ks; i++) {
+        for (int j = 0; j < ds; j++) {
+            cha = mt[i][j];
+            //        chi=mt[i][j];
+            //        if (chi==(-1)) continue;
+            if (cha == EOF)
+                continue;
+            else
+                fwrite(&cha, sizeof cha, 1, f);
+            //        printf("%d",j);
+            printf("%c", cha);
+        }
+        // printf("%d\n",i);
+        // fputs("\n",f);
+    } //
+    fclose(f);
+}
+
+void Clean()
+{
     system("CLS");
-    tf = fopen(name, "w+");
-    fclose(tf);
-    getchar();
+    f = fopen(fname, "w");
+    fclose(f);
+    // _getch();
 }
 
 void strlong()
