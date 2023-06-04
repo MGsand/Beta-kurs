@@ -1,11 +1,42 @@
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string.h> 
+void selectfail();
+void Shellsort(char **AA,int N);
+void pars (char stro[],int n);
 char **A;
 int j=0;
 typedef char *pint;
-   
+	int w,n=20;
+char fname[10];
+FILE *f,*pu;
+int main () {
+//fname= fileselect();
+	printf(" scan \n");
+	f=fopen(fname,"r");
+     printf(" fopen \n");
+	getchar();
+	
+	fclose(f);
+return 0;
+}
+
+void selectfail(){
+     int flag=0;
+      while (flag==0)
+{     	printf(" Enter filename \n");
+//       fgets(fname);  
+//		fname=fgets( buffer, buffer_len, stdin ) ;
+		scanf("%s",fname);
+       if ((f=fopen(fname,"r")) == NULL) {
+                              printf("Error open file not faund \n ");
+                             } else { 
+                                    printf("Open file \n");     
+                                   flag=1;                                
+                                  }
+       }
+}
+
 void Shellsort(char **AA,int N){
 	int h=2,i,jj,k;
 	char t[20],temp[20];//slovo
@@ -68,67 +99,4 @@ void Shellsort(char **AA,int N){
 	j++;
 	i=0;
 return;
-}
-
-int main () {
-	int w,n=20;
-	 A= (char **) malloc(n*sizeof(char *));
-     A = new  pint[n];
-    char ch, sl[200];
-    char text[]="one two three four\n";
-	FILE *pf,*pu; 
-	pf=fopen("A.txt","r"); 
-//fprintf(pf,"%d",5);
-fscanf(pf,"%d",&w);
- for(int i=0;i<6;i++)
- {
- //fputs(text,pf);
- }
-fclose(pf);
- 
-pf=fopen("A.txt","r"); //otkritie faila
-printf(" %s\n"," From FILE:  ");
-
-while ((ch=getc(pf))!=EOF)
-   {
-   fgets(sl, 200, pf);
-   char temp[2];
-   temp[0] = ch;
-   temp[1]='\0';
-   
-   strcpy(temp,  strcat(temp,sl));
-   
-   //printf("%s", temp);
-    pars(temp,n);
-}
-
-printf("\n This is result array \n");
-    
-	//for(int i=0;i<10;i++){
-	
-     for(int i=0;i<j;i++)  //j - kolvo slov
-     	{
-		  printf("%s \n", A[i]);
-     }
-   //  printf("\n");
-   Shellsort(A,j);
-   
-
-printf("\n This is result array \n");
-    
-	//for(int i=0;i<10;i++){
-	
-     for(int i=0;i<j;i++)  //j - kolvo slov
-     	{
-		  printf("%s \n", A[i]);
-     }
-	    
- for(int i=0; i<n; i++) {
-       free(A[i]);
-       }
-     free(A);
-
-//printf(" %d",w);
-fclose(pf);
-return 0;
 }
