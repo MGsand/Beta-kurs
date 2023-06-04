@@ -1,134 +1,242 @@
+#include <iostream>
+#include <math.h>
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 #include <string.h>
-char **A;
-int j=0;
-typedef char *pint;
-   
-void Shellsort(char **AA,int N){
-	int h=2,i,jj,k;
-	char t[20],temp[20];//slovo
-	for(k=h;k>0;k--){
-	 for(i=k;i<N;i++){
-	 	strcpy(t,AA[i]);
-	 	jj=i-k;
-	 
-	 	while(jj>=0 && strcmp(t,AA[jj]) < 0){ //sortirovka
-	 	
-	 		strcpy(temp,AA[jj+k]);
-	 		strcpy(AA[jj+k],AA[jj]);
-	 		strcpy(AA[jj],temp);
-	 		jj=jj-k;
-	 		
-		}
-	 	strcpy(t,AA[jj+k]);
-	 }}
-}
-    void pars (char stro[],int n){
-    	printf("\n%s\n",stro);
-		int i=0;
-    	char ch= stro[0]; //droblenie na slova
-    	int k=0;
-    	char slovo[20];
-    	 
-     //или a4=new char*[n]
-    
-    while (ch != '\0')
-    {
-    		while ( (stro[k-1]==' ') && (stro[k]==' ') && (stro[k] != '\0')&&(k<20)) 
-    			k++;
-	        ch= stro[k];k++;
-			//printf("%c",ch);
-	    	if ((ch != ' ') && (ch != '\0')) 
-			{
-    		slovo[i] = ch;
-	    	i++;
-			}
-			else{
-				if(ch!= '\0')
-				{
-				
-			slovo[i+1] = '\0';	
-			printf("RES %s \n",slovo);
-			A[j]=(char *) calloc(i+1,sizeof(char));
-           // A[j] = new char[i+1];
-            strcpy(A[j], slovo);
-			j++;
-			i=0;
-			for (int i=0; i<20; i++) 
-				slovo[i]='\0';
-			}}
-			
-	}
-	slovo[1+i] = '\0';	
-	printf("RES %s\n",slovo);
-	A[j]=(char *) calloc(i+1,sizeof(char));
-	strcpy(A[j], slovo);
-	j++;
-	i=0;
-return;
+//#include <unistd.h>
+void format(int ds);
+void noformat(int ds);
+void selectfail();
+void Clean();
+void strlong();
+FILE* f;
+int dstr = 10;
+int nstr = 0;
+char stroka[] = "one two";
+//
+int r;
+int n = 10, ij = 0;
+char fname[255];
+//
+char cs[15];
+int spper = 1;
+int flag = 0;
+
+int main()
+{
+    char c;
+    selectfail();
+    while (1) {
+        system("CLS");
+        puts("  1 - Select file");
+        puts("  2 - Clean all file");
+        puts("  3 - Change string length ");
+        puts("  4 - No format");
+        puts("  5 - Format ");
+        puts("  0 - Exit");
+
+        c = getchar();
+        switch (c) {
+        case '1':
+            selectfail();
+            break;
+        case '2':
+            Clean();
+            break;
+        case '3':
+            strlong();
+            break;
+        case '4':
+            noformat(dstr);
+            break;
+        case '5':
+            format(dstr);
+            break;
+        case '0':
+            return 0;
+        }
+    }
+
+    getchar();
 }
 
-int main () {
-	int w,n=20;
-	 A= (char **) malloc(n*sizeof(char *));
-     A = new  pint[n];
-    char ch, sl[200];
-    char text[]="one two three four\n";
-	FILE *pf,*pu; 
-	pf=fopen("A.txt","r"); 
-//fprintf(pf,"%d",5);
-fscanf(pf,"%d",&w);
- for(int i=0;i<6;i++)
- {
- //fputs(text,pf);
- }
-fclose(pf);
- 
-pf=fopen("A.txt","r"); //otkritie faila
-printf(" %s\n"," From FILE:  ");
+void format(int ds)
+{
+    f = fopen(fname, "r");
+    char cha;
+    char pred;
+    //   int chi;
+    int k = 0, ks = 1;
 
-while ((ch=getc(pf))!=EOF)
-   {
-   fgets(sl, 200, pf);
-   char temp[2];
-   temp[0] = ch;
-   temp[1]='\0';
-   
-   strcpy(temp,  strcat(temp,sl));
-   
-   //printf("%s", temp);
-    pars(temp,n);
+    do {
+        cha = fgetc(f);
+        k++;
+        if ((k % ds) == 0)
+            ks++;
+    } while (cha != EOF);
+    // printf("ks=%d\n",ks);
+    // printf("k=%d\n",k);
+
+    rewind(f);
+    char mt[ks][ds];
+    for (int i = 0; i < ks; i++) {
+        for (int j = 0; j < ds; j++) {
+            mt[i][j] = fgetc(f);
+            cha = mt[i][j];
+            //         chi=mt[i][j];
+            while (cha == '\n') {
+                mt[i][j] = fgetc(f);
+                cha = mt[i][j];
+                //                       j++;
+                //                         puts("/ m n");
+            }
+            while (pred == cha && cha == ' ') {
+                mt[i][j] = fgetc(f);
+                cha = mt[i][j];
+                //                      puts("probel");
+            }
+            pred = cha;
+        }
+    }
+    fclose(f);
+    // printf("\n");
+    // printf("\n");
+
+    f = fopen(fname, "w");
+    fclose(f);
+
+    f = fopen(fname, "r+");
+    for (int i = 0; i < ks; i++) {
+        for (int j = 0; j < ds; j++) {
+            cha = mt[i][j];
+            //       chi=mt[i][j];
+            //        if (chi==(-1)) continue;
+            if (cha == EOF)
+                continue;
+            else
+                fwrite(&cha, sizeof cha, 1, f);
+            //        printf("%d",j);
+            //          printf("%c",cha);
+        }
+        fputs("\n", f);
+    }
+    fclose(f);
 }
 
-printf("\n This is result array \n");
-    
-	//for(int i=0;i<10;i++){
-	
-     for(int i=0;i<j;i++)  //j - kolvo slov
-     	{
-		  printf("%s \n", A[i]);
-     }
-   //  printf("\n");
-   Shellsort(A,j);
-   
+void noformat(int ds)
+{
+    // char str[ds];
+    f = fopen(fname, "r");
+    char cha;
+    char pred;
+    //   int chi;
+    int k = 0, ks = 1;
 
-printf("\n This is result array \n");
-    
-	//for(int i=0;i<10;i++){
-	
-     for(int i=0;i<j;i++)  //j - kolvo slov
-     	{
-		  printf("%s \n", A[i]);
-     }
-	    
- for(int i=0; i<n; i++) {
-       free(A[i]);
-       }
-     free(A);
+    do {
+        cha = fgetc(f);
+        k++;
+        if ((k % ds) == 0)
+            ks++;
+    } while (cha != EOF); // */
+    // printf("ks=%d\n",ks);
+    // printf("k=%d\n",k);
 
-//printf(" %d",w);
-fclose(pf);
-return 0;
+    rewind(f);
+    // puts("a");
+    char mt[ks][ds];
+    for (int i = 0; i < ks; i++) {
+        for (int j = 0; j < ds; j++) {
+            mt[i][j] = fgetc(f);
+            cha = mt[i][j];
+            //         chi=mt[i][j];
+            while (cha == '\n') {
+                mt[i][j] = fgetc(f);
+                cha = mt[i][j];
+                //                       j++;
+                //                         puts("/ m n");
+            }
+            while (pred == cha && cha == ' ') {
+                mt[i][j] = fgetc(f);
+                cha = mt[i][j];
+                //                      puts("probel");
+            }
+            pred = cha;
+            //         if (cha==EOF) continue;
+            //         if (chi==(-1)) continue;
+        }
+        // fputs("\n",f);
+    } //
+    fclose(f);
+    // printf("\n");
+    // printf("\n");
+
+    f = fopen(fname, "w");
+    fclose(f);
+
+    f = fopen(fname, "r+");
+    for (int i = 0; i < ks; i++) {
+        for (int j = 0; j < ds; j++) {
+            cha = mt[i][j];
+            //        chi=mt[i][j];
+            //        if (chi==(-1)) continue;
+            if (cha == EOF)
+                continue;
+            else
+                fwrite(&cha, sizeof cha, 1, f);
+            //        printf("%d",j);
+            //          printf("%c",cha);
+        }
+        // printf("%d\n",i);
+        // fputs("\n",f);
+    } //
+    fclose(f);
 }
+
+void Clean()
+{
+    system("CLS");
+    f = fopen(fname, "w");
+    fclose(f);
+    // _getch();
+}
+
+void strlong()
+{
+    int dst;
+    //     int d;
+    int ssh = 1;
+    //     int chi[4];
+    //     int ch;
+    while (ssh == 1) {
+        puts(" Enter new string length \n  ");
+        //     scanf("%s", chi);
+        scanf("%d", &dst);
+        //      printf("%s", chi);
+        if (dst > 0 && dst < 100) {
+            dstr = dst;
+            format(dstr);
+            ssh = 0;
+        } else {
+            puts(" Error ");
+        }
+        ssh = 0;
+    }
+}
+
+void selectfail()
+{
+    int flag = 0;
+    while (flag == 0) {
+        printf(" Enter filename \n");
+        // gets(fname);
+        scanf("%s", fname);
+        if ((f = fopen(fname, "r")) == NULL) {
+            printf("Error open file not faund \n ");
+        } else {
+            printf("Open file \n");
+            flag = 1;
+        }
+    }
+}
+
+
