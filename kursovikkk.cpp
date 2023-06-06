@@ -4,11 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 //#include <unistd.h>
-void format(int ds); // есть изменения в форматировании связанные с абзацем
+void format(int ds);
 void noformat(int ds);
-void paragraph(); //функция для выделения абзаца
+void paragraph();
 void selectfail();
 void Clean();
+void Cleanabz(); //заполнение массива с номером строк 0
 void strlong();
 FILE* f;
 int dstr = 10;
@@ -21,14 +22,16 @@ char fname[255];
 char cs[15];
 int spper = 1;
 int flag = 0;
-int abz = -1; //номер абзаца если он меньше 0 то абзаца нет
+int abz = -1;
 int flp = 1;
-
+char abzz[2000];             // массив с номером строк (1-абзац, 0- обычная строка)
+ 
 int main()
 {
+    Cleanabz();
     char c;
     selectfail();
-    noformat(dstr);
+    noformat(dstr);             // убираем лишние пробелы и переносы
     while (1) {
         system("CLS");
         puts("  ");
@@ -55,6 +58,7 @@ int main()
             strlong();
             break;
         case '4':
+            Cleanabz();
             noformat(dstr);
             break;
         case '5':
@@ -92,8 +96,7 @@ void format(int ds)
     // printf("ks=%d\n",ks);
     // printf("k=%d\n",k);
     if (abz >= ks)
-        puts("Exceeds the number of lines"); // проверка, сравнение строки 
-                                             // абзаца с количеством строк
+        puts("Exceeds the number of lines");
     else
         flp = 0;
 
@@ -102,7 +105,8 @@ void format(int ds)
     char mt[ks][ds];
     for (int i = 0; i < ks; i++) {
         for (int j = 0; j < ds; j++) {
-            if ((i == abz)  && (j == 0 || j == 1  || j == 2)) { // заполнение нужной строки абзацем
+            if (((i == abz) || (abzz[i] == 1))
+                && (j == 0 || j == 1 || j == 2)) {
                 cha = ' ';
                 mt[i][j] = cha;
             } else {
@@ -123,7 +127,7 @@ void format(int ds)
                 pred = cha;
             }
         }
-    } //
+    } // f
     fclose(f);
     printf("\n");
     printf("\n");
@@ -219,19 +223,21 @@ void noformat(int ds)
 }
 
 void paragraph()
-{ //функция  добавления абзаца
+{
     int oi;
 
     puts("enter the line");
     scanf("%d", &oi);
     if (oi > 0 && oi <= nstr) {
         abz = oi - 1;
+        abzz[abz] = 1; // отмечаем номер нужной строки в массиве
         format(dstr);
         flp = 0;
     } else {
         puts(" Error ");
     }
 }
+
 void Clean()
 {
     system("CLS");
@@ -240,16 +246,23 @@ void Clean()
     // _getch();
 }
 
-void strlong() // изменение длины строки
+void strlong()
 {
     int dst;
     puts(" Enter new string length \n  ");
     scanf("%d", &dst);
     if (dst > 0 && dst < 100) {
         dstr = dst;
-        format(dstr); // форматирование если всё хорошо
+        format(dstr);
     } else {
         puts(" Error ");
+    }
+}
+
+void Cleanabz()
+{                                                          //функция удаления абзаца
+    for (int i = 0; i < 2000; i++) {
+        abzz[i] = 0;
     }
 }
 
