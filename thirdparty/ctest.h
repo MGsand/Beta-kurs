@@ -831,7 +831,7 @@ ctest_main(int argc, const char* argv[])
 
 #ifdef __cplusplus
 }
-#endif
 
 #endif
 
+#endif
