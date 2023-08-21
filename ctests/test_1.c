@@ -140,4 +140,3 @@ CTEST(functions, save_test)
     ASSERT_DATA(expected_text1, 18, result_text1, 18);
     ASSERT_DATA(expected_text2, 15, result_text2, 15);
 }
-
