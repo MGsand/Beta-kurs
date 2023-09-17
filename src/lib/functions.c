@@ -1,4 +1,4 @@
-#include "functions.h"
+#include <lib/functions.h>
 #include <string.h>
 
 FILE* f;
@@ -221,6 +221,8 @@ void selectfail()
     scanf("%s", fname);
     while ((f = fopen(fname, "r")) == NULL) {
         printf("Error open, file not faund \n ");
+        printf(" Enter filename \n");
+        scanf("%s", fname);
     }
     printf("Open file \n");
 }
