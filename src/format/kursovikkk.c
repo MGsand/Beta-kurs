@@ -1,16 +1,15 @@
-#include "functions.h"
+#include <lib/functions.h>
 
 int main()
 {
     Cleanabz();
     char c;
-
-    int dstr_temp = 0;
-
+    int ds= 40;
     selectfail();
-    noformat(dstr_temp);
+    noformat(ds);
+    save();
     while (1) {
-        system("CLS");
+        system("clear");
         puts("  ");
         puts("  ** Formatter **");
         puts("  ");
@@ -32,17 +31,22 @@ int main()
             Clean();
             break;
         case '3':
-            strlong();
+            ds=strlong();
+            printsave();
             break;
         case '4':
             Cleanabz();
-            noformat(dstr_temp);
+            printsave();
+            noformat(ds);
             break;
         case '5':
-            format(dstr_temp);
+            printsave();
+            format(ds);
             break;
         case '6':
             paragraph();
+            printsave();
+            format(ds);
             break;
         case '0':
             return 0;

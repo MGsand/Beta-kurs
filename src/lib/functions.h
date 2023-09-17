@@ -8,6 +8,8 @@
 
 void format(int ds);
 
+void sel();
+
 void noformat(int ds);
 
 void paragraph();
@@ -22,4 +24,4 @@ void save();
 
 void printsave();
 
-void strlong();
+int strlong();
