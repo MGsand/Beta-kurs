@@ -1,16 +1,17 @@
-#include "functions.h"
+#include <lib/functions.h>
+#include <string.h>
 
 int main()
 {
     Cleanabz();
     char c;
-
-    int dstr_temp = 0;
-
+    int ds = 40;
+    int e = 0;
     selectfail();
-    noformat(dstr_temp);             // убираем лишние пробелы и переносы
+    nof();
+    save();
     while (1) {
-        system("CLS");
+        system("clear");
         puts("  ");
         puts("  ** Formatter **");
         puts("  ");
@@ -32,19 +33,22 @@ int main()
             Clean();
             break;
         case '3':
-            strlong();
+            ds = strlong();
+            fo();
             break;
         case '4':
             Cleanabz();
-            noformat(dstr_temp);
+            fo();
             break;
         case '5':
-            format(dstr_temp);
+            fo();
             break;
         case '6':
             paragraph();
             break;
         case '0':
+            e = ds;
+            ds = e;
             return 0;
         }
     }

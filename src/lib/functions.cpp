@@ -1,12 +1,14 @@
-#include "functions.h"
+#include <lib/functions.h>
+#include <string.h>
 
 FILE* f;
 
-int dstr = 40;
+int ds = 40;
 int nstr = 0;
 
 int r;
 int n = 10, ij = 0;
+char chaa;
 char fname[255];
 
 char cs[15];
@@ -18,36 +20,27 @@ int ksim;
 char* p;
 char abzz[2000];
 
-
-
-void format(int ds)
+void format(char fname[255], int ds)
 {
     f = fopen(fname, "r");
     char cha;
     char pred;
     int k = 0, ks = 1;
-    int stran=0,ki=0;
-    if (abz >= 0)
+    int stran = 1, ki = 0;
+    if ((abz >= 0) && (abz <= ks))
         k += 3;
+
     do {
         cha = fgetc(f);
         k++;
-
         if ((k % ds) == 0)
             ks++;
-
-    } while (cha != EOF); 
-   
-    if (abz >= ks)
-        puts("Exceeds the number of lines");
-    else
-        flp = 0;
-
+    } while (cha != EOF);
+    nstr = ks;
+    ksim = k;
     rewind(f);
-    puts("a");
-
+    printf("ds %d\n", ds);
     char mt[ks][ds];
-
     for (int i = 0; i < ks; i++) {
         for (int j = 0; j < ds; j++) {
             if (((i == abz) || (abzz[i] == 1))
@@ -57,25 +50,21 @@ void format(int ds)
             } else {
                 mt[i][j] = fgetc(f);
                 cha = mt[i][j];
-               
                 while (cha == '\n') {
                     mt[i][j] = fgetc(f);
                     cha = mt[i][j];
                 }
-                pred = cha;
                 while (pred == cha && cha == ' ') {
                     mt[i][j] = fgetc(f);
                     cha = mt[i][j];
-                    
                 }
+                pred = cha;
             }
         }
-    } 
+    }
     fclose(f);
-    printf("\n");
-    printf("\n");
 
-    f = fopen(fname, "w"); 
+    f = fopen(fname, "w");
     fclose(f);
 
     f = fopen(fname, "r+");
@@ -83,30 +72,29 @@ void format(int ds)
         ki++;
         for (int j = 0; j < ds; j++) {
             cha = mt[i][j];
-      
             if (cha == EOF)
                 continue;
             else
                 fwrite(&cha, sizeof cha, 1, f);
         }
-        if ( ki == 40){ 
-             stran++;
-             fprintf(f,"\n         %d",stran);   
-             ki=0;    
-        } 
         fputs("\n", f);
+        if (ki == 40) {
+            fprintf(f, "\n         %d", stran);
+            fputs("\n", f);
+            stran++;
+            ki = 0;
+        }
+        abz = -1;
     }
-    stran++;
-    if (ki != 0)
-    {
-        fprintf(f,"         %d",stran);
+    if (ki != 0) {
+        fputs("\n", f);
+        fprintf(f, "         %d", stran);
     }
-                    
-    abz = -1;
+
     fclose(f);
 }
 
-void noformat(int ds)
+void noformat(char fname[255])
 {
     f = fopen(fname, "r");
     char cha;
@@ -118,13 +106,11 @@ void noformat(int ds)
         k++;
         if ((k % ds) == 0)
             ks++;
-    } while (cha != EOF); 
+    } while (cha != EOF);
     nstr = ks;
     ksim = k;
     rewind(f);
-
     char mt[ks][ds];
-
     for (int i = 0; i < ks; i++) {
         for (int j = 0; j < ds; j++) {
             mt[i][j] = fgetc(f);
@@ -132,17 +118,14 @@ void noformat(int ds)
             while (cha == '\n') {
                 mt[i][j] = fgetc(f);
                 cha = mt[i][j];
-         
             }
-            pred = cha;
             while (pred == cha && cha == ' ') {
                 mt[i][j] = fgetc(f);
                 cha = mt[i][j];
-         
             }
-            
+            pred = cha;
         }
-    } 
+    }
     fclose(f);
 
     f = fopen(fname, "w");
@@ -157,7 +140,7 @@ void noformat(int ds)
             else
                 fwrite(&cha, sizeof cha, 1, f);
         }
-    } 
+    }
     fclose(f);
 }
 
@@ -170,7 +153,7 @@ void paragraph()
     if (oi > 0 && oi <= nstr) {
         abz = oi - 1;
         abzz[abz] = 1;
-        format(dstr);
+        fo();
         flp = 0;
     } else {
         puts(" Error ");
@@ -179,22 +162,22 @@ void paragraph()
 
 void Clean()
 {
-    system("CLS");
     f = fopen(fname, "w");
     fclose(f);
 }
 
-void strlong()
+int strlong()
 {
     int dst;
     puts(" Enter new string length \n  ");
     scanf("%d", &dst);
     if (dst > 0 && dst < 100) {
-        dstr = dst;
-        format(dstr);
+        ds = dst;
+        fo();
     } else {
         puts(" Error ");
     }
+    return dst;
 }
 
 void Cleanabz()
@@ -207,46 +190,50 @@ void Cleanabz()
 void save()
 {
     f = fopen(fname, "r");
-    char cha;
+    p = (char*)malloc(ksim * sizeof(char));
     int y = 0;
     for (int i = 0; i < ksim; i++) {
         p[i] = fgetc(f);
-        cha = p[i];
+        chaa = p[i];
     }
-    if (cha == ' ')
+    if (chaa == ' ')
         y++;
-   
     fclose(f);
 }
 
 void printsave()
 {
-    char cha;
     f = fopen(fname, "w");
     fclose(f);
 
     f = fopen(fname, "r+");
     for (int i = 0; i < ksim; i++) {
-        cha = p[i];
-        
-        fwrite(&cha, sizeof cha, 1, f);
+        chaa = p[i];
+
+        fwrite(&chaa, sizeof chaa, 1, f);
     }
     fclose(f);
 }
 
 void selectfail()
 {
-    int flag = 0;
-    while (flag == 0) {
+    printf(" Enter filename \n");
+    scanf("%s", fname);
+    while ((f = fopen(fname, "r")) == NULL) {
+        printf("Error open, file not faund \n ");
         printf(" Enter filename \n");
-        
         scanf("%s", fname);
-        if ((f = fopen(fname, "r")) == NULL) {
-            printf("Error open file not faund \n ");
-        } else {
-            printf("Open file \n");
-            flag = 1;
-        }
     }
+    printf("Open file \n");
 }
 
+void nof()
+{
+    noformat(fname);
+}
+
+void fo()
+{
+    printsave();
+    format(fname, ds);
+}
