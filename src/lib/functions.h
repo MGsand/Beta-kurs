@@ -6,11 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-void format(int ds);
+void format(char fname[255], int ds);
 
-void sel();
-
-void noformat(int ds);
+void noformat(char fname[255]);
 
 void paragraph();
 
@@ -25,3 +23,7 @@ void save();
 void printsave();
 
 int strlong();
+
+void nof();
+
+void fo();

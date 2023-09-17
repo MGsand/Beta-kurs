@@ -1,12 +1,14 @@
 #include <lib/functions.h>
+#include <string.h>
 
 int main()
 {
     Cleanabz();
     char c;
-    int ds= 40;
+    int ds = 40;
+    int e = 0;
     selectfail();
-    noformat(ds);
+    nof();
     save();
     while (1) {
         system("clear");
@@ -31,24 +33,22 @@ int main()
             Clean();
             break;
         case '3':
-            ds=strlong();
-            printsave();
+            ds = strlong();
+            fo();
             break;
         case '4':
             Cleanabz();
-            printsave();
-            noformat(ds);
+            fo();
             break;
         case '5':
-            printsave();
-            format(ds);
+            fo();
             break;
         case '6':
             paragraph();
-            printsave();
-            format(ds);
             break;
         case '0':
+            e = ds;
+            ds = e;
             return 0;
         }
     }

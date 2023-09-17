@@ -1,4 +1,5 @@
 #include "functions.h"
+#include <string.h>
 
 FILE* f;
 
@@ -8,7 +9,7 @@ int nstr = 0;
 int r;
 int n = 10, ij = 0;
 char chaa;
- char fname[255];
+char fname[255];
 
 char cs[15];
 int spper = 1;
@@ -19,13 +20,13 @@ int ksim;
 char* p;
 char abzz[2000];
 
-void format(int ds)
+void format(char fname[255], int ds)
 {
     f = fopen(fname, "r");
     char cha;
     char pred;
     int k = 0, ks = 1;
-        int stran = 1, ki = 0;
+    int stran = 1, ki = 0;
     if ((abz >= 0) && (abz <= ks))
         k += 3;
 
@@ -34,7 +35,7 @@ void format(int ds)
         k++;
         if ((k % ds) == 0)
             ks++;
-    } while (cha != EOF); 
+    } while (cha != EOF);
     nstr = ks;
     ksim = k;
     rewind(f);
@@ -42,25 +43,25 @@ void format(int ds)
     char mt[ks][ds];
     for (int i = 0; i < ks; i++) {
         for (int j = 0; j < ds; j++) {
-        if (((i == abz) || (abzz[i] == 1))
+            if (((i == abz) || (abzz[i] == 1))
                 && (j == 0 || j == 1 || j == 2)) {
                 cha = ' ';
                 mt[i][j] = cha;
             } else {
-            mt[i][j] = fgetc(f);
-            cha = mt[i][j];
-            while (cha == '\n') {
                 mt[i][j] = fgetc(f);
                 cha = mt[i][j];
+                while (cha == '\n') {
+                    mt[i][j] = fgetc(f);
+                    cha = mt[i][j];
+                }
+                while (pred == cha && cha == ' ') {
+                    mt[i][j] = fgetc(f);
+                    cha = mt[i][j];
+                }
+                pred = cha;
             }
-            while (pred == cha && cha == ' ') {
-                mt[i][j] = fgetc(f);
-                cha = mt[i][j];
-            }
-            pred = cha;
-           } 
         }
-    } 
+    }
     fclose(f);
 
     f = fopen(fname, "w");
@@ -68,7 +69,7 @@ void format(int ds)
 
     f = fopen(fname, "r+");
     for (int i = 0; i < ks; i++) {
-    ki++;
+        ki++;
         for (int j = 0; j < ds; j++) {
             cha = mt[i][j];
             if (cha == EOF)
@@ -86,14 +87,14 @@ void format(int ds)
         abz = -1;
     }
     if (ki != 0) {
-         fputs("\n", f);
+        fputs("\n", f);
         fprintf(f, "         %d", stran);
-    } 
+    }
 
     fclose(f);
 }
 
-void noformat(int ds)
+void noformat(char fname[255])
 {
     f = fopen(fname, "r");
     char cha;
@@ -105,7 +106,7 @@ void noformat(int ds)
         k++;
         if ((k % ds) == 0)
             ks++;
-    } while (cha != EOF); // */
+    } while (cha != EOF);
     nstr = ks;
     ksim = k;
     rewind(f);
@@ -124,9 +125,9 @@ void noformat(int ds)
             }
             pred = cha;
         }
-    } 
+    }
     fclose(f);
-    
+
     f = fopen(fname, "w");
     fclose(f);
 
@@ -139,7 +140,7 @@ void noformat(int ds)
             else
                 fwrite(&cha, sizeof cha, 1, f);
         }
-    } 
+    }
     fclose(f);
 }
 
@@ -152,7 +153,7 @@ void paragraph()
     if (oi > 0 && oi <= nstr) {
         abz = oi - 1;
         abzz[abz] = 1;
-        format(ds);
+        fo();
         flp = 0;
     } else {
         puts(" Error ");
@@ -172,8 +173,7 @@ int strlong()
     scanf("%d", &dst);
     if (dst > 0 && dst < 100) {
         ds = dst;
-        format(ds);
-        printf("%d\n", ds);
+        fo();
     } else {
         puts(" Error ");
     }
@@ -190,8 +190,7 @@ void Cleanabz()
 void save()
 {
     f = fopen(fname, "r");
-    //char cha;
-    p=(char*)malloc(ksim*sizeof(char));
+    p = (char*)malloc(ksim * sizeof(char));
     int y = 0;
     for (int i = 0; i < ksim; i++) {
         p[i] = fgetc(f);
@@ -217,11 +216,22 @@ void printsave()
 }
 
 void selectfail()
-{	
-     printf(" Enter filename \n");
-     scanf("%s", fname);
-     while ((f =fopen(fname, "r")) == NULL) {
-     	printf("Error open, file not faund \n ");
-     }   
-     printf("Open file \n");
+{
+    printf(" Enter filename \n");
+    scanf("%s", fname);
+    while ((f = fopen(fname, "r")) == NULL) {
+        printf("Error open, file not faund \n ");
+    }
+    printf("Open file \n");
+}
+
+void nof()
+{
+    noformat(fname);
+}
+
+void fo()
+{
+    printsave();
+    format(fname, ds);
 }
