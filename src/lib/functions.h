@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <math.h>
@@ -27,3 +28,5 @@ int strlong();
 void nof();
 
 void fo();
+
+#endif
