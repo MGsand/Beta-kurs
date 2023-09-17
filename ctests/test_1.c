@@ -135,4 +135,3 @@ CTEST(functions, noformat_test)
     ASSERT_STR(expected_text1, result_text1);
     ASSERT_STR(expected_text2, result_text2);
 }
-
