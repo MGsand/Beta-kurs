@@ -38,7 +38,7 @@ int main()
             break;
         case '4':
             Cleanabz();
-            fo();
+            nof();
             break;
         case '5':
             fo();
