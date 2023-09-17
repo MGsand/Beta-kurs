@@ -1,4 +1,4 @@
-#include <lib/functions.h>
+#include "functions.h"
 #include <string.h>
 
 FILE* f;
