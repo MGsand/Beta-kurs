@@ -1,35 +1,21 @@
 #include "functions.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-FILE* f;
-
-int ds = 40;
-int nstr = 0;
-
-int r;
-int n = 10, ij = 0;
-char chaa;
-char fname[255];
-
-char cs[15];
-int spper = 1;
-int flag = 0;
-int abz = -1;
-int flp = 1;
-int ksim;
-char* p;
-char abzz[2000];
-
-void format(char fname[255], int ds)
+void format(char* fname, int ds, int kstr)
 {
+    FILE* f;
     f = fopen(fname, "r");
+    if (f == NULL) {
+        printf("Error opening file for reading and writing.\n");
+        return;
+    }
     char cha;
-    char pred;
-    int k = 0, ks = 1;
+    char pred = ' ';
+    int k = 0, ks = 0;
     int stran = 1, ki = 0;
-    if ((abz >= 0) && (abz <= ks))
-        k += 3;
-
+    int nstr;
     do {
         cha = fgetc(f);
         k++;
@@ -37,37 +23,32 @@ void format(char fname[255], int ds)
             ks++;
     } while (cha != EOF);
     nstr = ks;
-    ksim = k;
     rewind(f);
-    printf("ds %d\n", ds);
     char mt[ks][ds];
     for (int i = 0; i < ks; i++) {
         for (int j = 0; j < ds; j++) {
-            if (((i == abz) || (abzz[i] == 1))
-                && (j == 0 || j == 1 || j == 2)) {
-                cha = ' ';
-                mt[i][j] = cha;
-            } else {
+            mt[i][j] = fgetc(f);
+            cha = mt[i][j];
+            while (cha == '\n') {
                 mt[i][j] = fgetc(f);
                 cha = mt[i][j];
-                while (cha == '\n') {
-                    mt[i][j] = fgetc(f);
-                    cha = mt[i][j];
-                }
-                while (pred == cha && cha == ' ') {
-                    mt[i][j] = fgetc(f);
-                    cha = mt[i][j];
-                }
-                pred = cha;
             }
+            while (pred == cha && cha == ' ') {
+                mt[i][j] = fgetc(f);
+                cha = mt[i][j];
+            }
+            pred = cha;
+            //}
         }
     }
+
     fclose(f);
 
-    f = fopen(fname, "w");
-    fclose(f);
-
-    f = fopen(fname, "r+");
+    f = fopen(fname, "w+");
+    if (f == NULL) {
+        printf("Error opening file for reading and writing.\n");
+        return;
+    }
     for (int i = 0; i < ks; i++) {
         ki++;
         for (int j = 0; j < ds; j++) {
@@ -84,7 +65,6 @@ void format(char fname[255], int ds)
             stran++;
             ki = 0;
         }
-        abz = -1;
     }
     if (ki != 0) {
         fputs("\n", f);
@@ -94,12 +74,17 @@ void format(char fname[255], int ds)
     fclose(f);
 }
 
-void noformat(char fname[255])
+int noformat(char* fname)
 {
+    FILE* f;
     f = fopen(fname, "r");
+    if (f == NULL) {
+        printf("Error opening file for reading and writing.\n");
+        return;
+    }
     char cha;
     char pred;
-    int k = 0, ks = 1;
+    int k = 0, ks = 1, ds = 40;
 
     do {
         cha = fgetc(f);
@@ -107,8 +92,7 @@ void noformat(char fname[255])
         if ((k % ds) == 0)
             ks++;
     } while (cha != EOF);
-    nstr = ks;
-    ksim = k;
+
     rewind(f);
     char mt[ks][ds];
     for (int i = 0; i < ks; i++) {
@@ -128,10 +112,11 @@ void noformat(char fname[255])
     }
     fclose(f);
 
-    f = fopen(fname, "w");
-    fclose(f);
-
-    f = fopen(fname, "r+");
+    f = fopen(fname, "w+");
+    if (f == NULL) {
+        printf("Error opening file for reading and writing.\n");
+        return;
+    }
     for (int i = 0; i < ks; i++) {
         for (int j = 0; j < ds; j++) {
             cha = mt[i][j];
@@ -142,81 +127,69 @@ void noformat(char fname[255])
         }
     }
     fclose(f);
+    return k;
 }
 
-void paragraph()
+void Clean(char* fname)
 {
-    int oi;
-
-    puts("enter the line");
-    scanf("%d", &oi);
-    if (oi > 0 && oi <= nstr) {
-        abz = oi - 1;
-        abzz[abz] = 1;
-        fo();
-        flp = 0;
-    } else {
-        puts(" Error ");
-    }
-}
-
-void Clean()
-{
+    puts("1 ");
+    FILE* f;
     f = fopen(fname, "w");
+    if (f == NULL) {
+        printf("Error opening file for reading and writing.\n");
+        return;
+    }
     fclose(f);
 }
 
-int strlong()
+int strlong(char* fname, int ds)
 {
     int dst;
     puts(" Enter new string length \n  ");
     scanf("%d", &dst);
     if (dst > 0 && dst < 100) {
-        ds = dst;
-        fo();
+        return dst;
     } else {
         puts(" Error ");
-    }
-    return dst;
-}
-
-void Cleanabz()
-{
-    for (int i = 0; i < 2000; i++) {
-        abzz[i] = 0;
+        return ds;
     }
 }
 
-void save()
+void save(char* fname, char* p, int ks)
 {
+    FILE* f;
     f = fopen(fname, "r");
-    p = (char*)malloc(ksim * sizeof(char));
-    int y = 0;
-    for (int i = 0; i < ksim; i++) {
+    if (f == NULL) {
+        printf("Error opening file for reading and writing.\n");
+        return;
+    }
+    for (int i = 0; i < (ks); i++) {
         p[i] = fgetc(f);
-        chaa = p[i];
-    }
-    if (chaa == ' ')
-        y++;
-    fclose(f);
-}
-
-void printsave()
-{
-    f = fopen(fname, "w");
-    fclose(f);
-
-    f = fopen(fname, "r+");
-    for (int i = 0; i < ksim; i++) {
-        chaa = p[i];
-
-        fwrite(&chaa, sizeof chaa, 1, f);
     }
     fclose(f);
 }
 
-void selectfail()
+void printsave(char* fname, char* p, int ks)
 {
+    FILE* f;
+    char chaa;
+
+    f = fopen(fname, "w+");
+    if (f == NULL) {
+        printf("Error opening file for reading and writing.\n");
+        return;
+    }
+    for (int i = 0; i < (ks); i++) {
+        chaa = p[i];
+        if (chaa != EOF)
+            fwrite(&chaa, sizeof chaa, 1, f);
+    }
+    fclose(f);
+}
+
+void selectfile(char* fname)
+{
+    FILE* f;
     printf(" Enter filename \n");
     scanf("%s", fname);
     while ((f = fopen(fname, "r")) == NULL) {
@@ -225,15 +198,4 @@ void selectfail()
         scanf("%s", fname);
     }
     printf("Open file \n");
-}
-
-void nof()
-{
-    noformat(fname);
-}
-
-void fo()
-{
-    printsave();
-    format(fname, ds);
 }
