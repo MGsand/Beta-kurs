@@ -21,8 +21,9 @@ int main()
         return 1;
     }
     save(fn, p, ksim);
+    
     while (1) {
-        // system("clear");
+        system("clear");
         puts("  ");
         puts("  ** Formatter **");
         puts("  ");

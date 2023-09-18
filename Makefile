@@ -3,7 +3,7 @@ LIB_NAME = lib
 TEST_NAME = main_test
 
 TESTFLAGS = -I thirdparty
-CFLAGS = -I src/lib -I src
+CFLAGS = -I src/lib -I src -L
 DEPSFLAGS = -MMD
 CC = gcc
 
@@ -50,7 +50,7 @@ $(OBJ_DIR)/%.o: %.c
 test: $(LIB_PATH) $(TEST_PATH)
 	$(TEST_PATH)
 
-$(TEST_PATH): $(TEST_OBJECTS) $(LIB_PATH)
+$(TEST_PATH): $(TEST_OBJECTS) $(LIB_PATH)  
 	$(CC) $(TESTFLAGS) $(CFLAGS) $(DEPSFLAGS) -o $@ $^ 
 
 $(OBJ_DIR)/ctests/main.o: ctests/main.c

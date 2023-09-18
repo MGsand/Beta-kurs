@@ -1,7 +1,7 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-void format(char* fname, int ds, int kstr, char* abzz);
+void format(char* fname, int ds, int kstr);
 int noformat(char* fname);
 void selectfile(char* fname);
 void Clean(char* fname);
