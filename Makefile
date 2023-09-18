@@ -3,7 +3,7 @@ LIB_NAME = lib
 TEST_NAME = main_test
 
 TESTFLAGS = -I thirdparty
-CFLAGS = -I src/lib
+CFLAGS = -I src/lib -I src
 DEPSFLAGS = -MMD
 CC = gcc
 
