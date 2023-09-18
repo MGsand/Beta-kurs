@@ -1,6 +1,6 @@
-#include <stdio.h>
 #include "ctest.h"
 #include "functions.h"
+#include <stdio.h>
 
 CTEST(functions, numbers_test)
 {
