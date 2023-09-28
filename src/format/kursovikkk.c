@@ -20,7 +20,7 @@ int main()
         puts("Failed to allocate memory");
         return 1;
     }
-    save(fn, p, ksim);    
+    save(fn, p, ksim);
     while (1) {
         system("clear");
         puts("  ");
