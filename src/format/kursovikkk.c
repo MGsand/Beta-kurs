@@ -14,7 +14,7 @@ int main()
     int kst;
     int e = 0;
     selectfile(fn);
-    if ((f = fopen(fn, "r")) == NULL) 
+    if ((f = fopen(fn, "r")) == NULL)
         return 0;
     ksim = noformat(fn);
     kst = ksim / ds;
@@ -43,7 +43,7 @@ int main()
             free(p);
             p = NULL;
             selectfile(fn);
-            if ((f = fopen(fn, "r")) == NULL) 
+            if ((f = fopen(fn, "r")) == NULL)
                 return 0;
             ksim = noformat(fn);
             kst = ksim / ds;
