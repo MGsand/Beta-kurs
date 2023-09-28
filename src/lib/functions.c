@@ -192,10 +192,19 @@ void selectfile(char* fname)
     FILE* f;
     printf(" Enter filename \n");
     scanf("%s", fname);
-    while ((f = fopen(fname, "r")) == NULL) {
+    if ((f = fopen(fname, "r")) == NULL) {
         printf("Error open, file not faund \n ");
-        printf(" Enter filename \n");
+        printf(" Enter filename, you have 3 attempts \n");
         scanf("%s", fname);
     }
-    printf("Open file \n");
+    if ((f = fopen(fname, "r")) == NULL) {
+        printf("Error open, file not faund \n ");
+        printf(" Enter filename, you have 2 attempts \n");
+        scanf("%s", fname);
+    }
+    if ((f = fopen(fname, "r")) == NULL) {
+        printf("Error open, file not faund \n ");
+        printf(" Enter filename, you have 1 attempt \n");
+        scanf("%s", fname);
+    }
 }

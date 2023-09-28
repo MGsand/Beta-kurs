@@ -6,6 +6,7 @@
 int main()
 {
     char c;
+    FILE* f;
     char fn[256];
     char* p = NULL;
     int ksim;
@@ -13,6 +14,8 @@ int main()
     int kst;
     int e = 0;
     selectfile(fn);
+    if ((f = fopen(fn, "r")) == NULL) 
+        return 0;
     ksim = noformat(fn);
     kst = ksim / ds;
     p = (char*)malloc((ksim) * sizeof(char));
@@ -40,6 +43,8 @@ int main()
             free(p);
             p = NULL;
             selectfile(fn);
+            if ((f = fopen(fn, "r")) == NULL) 
+                return 0;
             ksim = noformat(fn);
             kst = ksim / ds;
             p = (char*)malloc((ksim) * sizeof(char));
