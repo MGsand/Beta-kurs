@@ -22,6 +22,7 @@ void format(char* fname, int ds, int kstr)
         if ((k % ds) == 0)
             ks++;
     } while (cha != EOF);
+    ks++;
     nstr = ks;
     rewind(f);
     char mt[ks][ds];
@@ -38,7 +39,6 @@ void format(char* fname, int ds, int kstr)
                 cha = mt[i][j];
             }
             pred = cha;
-            //}
         }
     }
 
@@ -147,7 +147,7 @@ int strlong(char* fname, int ds)
     int dst;
     puts(" Enter new string length \n  ");
     scanf("%d", &dst);
-    if (dst > 0 && dst < 100) {
+    if (dst > 9 && dst < 100) {
         return dst;
     } else {
         puts(" Error ");
